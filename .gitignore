@@ -1,0 +1,55 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE - JetBrains / Rider
+.idea/
+*.sln.DotSettings.user
+
+# IDE - VS Code / Cursor
+.vscode/
+.cursor/
+
+# Claude Code
+.claude/
+
+# MCP config (may contain secrets)
+.mcp.json
+
+# ==================== .NET ====================
+# Build output
+StockApi/bin/
+StockApi/obj/
+StockApi/logs/
+
+# User-specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# ==================== Node / Vite ====================
+stock-frontend/node_modules/
+stock-frontend/dist/
+stock-frontend/.env.local
+stock-frontend/.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript build info
+*.tsbuildinfo

@@ -53,3 +53,7 @@ yarn-error.log*
 
 # TypeScript build info
 *.tsbuildinfo
+
+# App settings (may contain secrets / connection strings)
+appsettings.json
+appsettings.*.json

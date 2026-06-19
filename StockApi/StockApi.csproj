@@ -24,4 +24,8 @@
       <Folder Include="Commnons\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="appsettings.json" />
+    </ItemGroup>
+
 </Project>

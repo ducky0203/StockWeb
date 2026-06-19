@@ -40,4 +40,34 @@ public class ConfigController(IConfigService configService, ILogger<ConfigContro
             return StatusCode(500, ApiResponse.ServerError());
         }
     }
+
+    [HttpGet("vi-tri-kho")]
+    public async Task<IActionResult> GetViTriKho_NPL([FromQuery] short id_Kho, CancellationToken ct)
+    {
+        try
+        {
+            var listViTriKho = await configService.GetListViTri_WithID_Kho(id_Kho, ct);
+            return Ok(ApiResponse.Ok(new { listViTriKho }));
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error getting all config");
+            return StatusCode(500, ApiResponse.ServerError());
+        }
+    }
+    
+    [HttpGet("vi-tri-thanh-pham")]
+    public async Task<IActionResult> GetViTriKho_ThanhPham([FromQuery] string maChiNhanh, CancellationToken ct)
+    {
+        try
+        {
+            var listViTriKho = await configService.GetListViTri_WithMaChiNhanh(maChiNhanh, ct);
+            return Ok(ApiResponse.Ok(new { listViTriKho }));
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error getting all config");
+            return StatusCode(500, ApiResponse.ServerError());
+        }
+    }
 }

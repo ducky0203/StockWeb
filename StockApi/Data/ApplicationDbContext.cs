@@ -7,6 +7,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<DM_KhoDTO> DM_KhoRepo { get; set; }
     public DbSet<DM_ChiNhanhDTO> DM_ChiNhanhRepo { get; set; }
+    public DbSet<DM_Kho_ViTriDto> DM_Kho_ViTriRepo { get; set; }
 
     // Nguyên liệu
     public DbSet<StockNguyenLieuDto> StockNguyenLieuRepo { get; set; }

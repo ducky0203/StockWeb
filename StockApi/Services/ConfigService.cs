@@ -1,7 +1,9 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using StockApi.Commnons;
 using StockApi.Data;
 using StockApi.DTOs;
+using StockApi.Models;
 
 namespace StockApi.Services;
 
@@ -12,6 +14,8 @@ public interface IConfigService
 
     Task<List<DM_KhoDTO>> GetAllKho(CancellationToken ct = default);
     Task<List<DM_ChiNhanhDTO>> GetAllChiNhanh(CancellationToken ct = default);
+    Task<List<DM_Kho_ViTriDto>> GetListViTri_WithID_Kho(short id_Kho, CancellationToken ct = default);
+    Task<List<DM_Kho_ViTriDto>> GetListViTri_WithMaChiNhanh(string maChiNhanh, CancellationToken ct = default);
 }
 
 public class ConfigService(ApplicationDbContext context, ICacheService cache) : IConfigService
@@ -38,7 +42,7 @@ public class ConfigService(ApplicationDbContext context, ICacheService cache) : 
         cache.GetOrCreateAsync("config:list-chi-nhanh", CacheDuration.Large, _ =>
         {
             const string sqlRaw = """
-                                  SELECT cn.MaChiNhanh, cn.TenChiNhanh, cn.ChiNhanh_PhuTro, cn.STT
+                                  SELECT cn.MaChiNhanh, cn.TenChiNhanh, cn.TenDayDu, cn.ChiNhanh_PhuTro, cn.STT
                                   FROM TNG_SYSDB.dbo.DM_CHINHANH cn
                                   WHERE cn.MaChiNhanh IN ('05', '06', '11', '12', '14')
                                     AND cn.ChiNhanh_Ngoai = 0
@@ -70,7 +74,7 @@ public class ConfigService(ApplicationDbContext context, ICacheService cache) : 
         cache.GetOrCreateAsync("config:all-chi-nhanh", CacheDuration.Large, _ =>
         {
             const string sqlRaw = """
-                                  SELECT cn.MaChiNhanh, cn.TenChiNhanh, cn.ChiNhanh_PhuTro, cn.STT
+                                  SELECT cn.MaChiNhanh, cn.TenChiNhanh, cn.TenDayDu, cn.ChiNhanh_PhuTro, cn.STT
                                   FROM TNG_SYSDB.dbo.DM_CHINHANH cn
                                   WHERE cn.ChiNhanh_Ngoai = 0
                                     AND cn.TinhTrangSuDung = 1
@@ -78,5 +82,25 @@ public class ConfigService(ApplicationDbContext context, ICacheService cache) : 
                                   ORDER BY cn.MaChiNhanh
                                   """;
             return context.DM_ChiNhanhRepo.FromSqlRaw(sqlRaw).ToListAsync(ct);
+        }, ct);
+    
+    public Task<List<DM_Kho_ViTriDto>> GetListViTri_WithID_Kho(short id_Kho, CancellationToken ct = default) =>
+        cache.GetOrCreateAsync($"config:vi-tri-kho-{id_Kho}", CacheDuration.Medium, _ =>
+        {
+            var iID_Kho = new SqlParameter("@iID_Kho", id_Kho);
+            const string sqlRaw = """
+                                  EXEC dbo.pr_Web_DM_Kho_ViTri_Select_wID_Kho @iID_Kho 
+                                  """;
+            return context.DM_Kho_ViTriRepo.FromSqlRaw(sqlRaw, iID_Kho).ToListAsync(ct);
+        }, ct);
+    
+    public Task<List<DM_Kho_ViTriDto>> GetListViTri_WithMaChiNhanh(string maChiNhanh, CancellationToken ct = default) =>
+        cache.GetOrCreateAsync($"config:vi-tri-thanh-pham-{maChiNhanh}", CacheDuration.Medium, _ =>
+        {
+            var sMaChiNhanh = new SqlParameter("@sMaChiNhanh", maChiNhanh);
+            const string sqlRaw = """
+                                  EXEC dbo.pr_Web_DM_Kho_ViTri_Select_wMaChiNhanh @sMaChiNhanh 
+                                  """;
+            return context.DM_Kho_ViTriRepo.FromSqlRaw(sqlRaw, sMaChiNhanh).ToListAsync(ct);
         }, ct);
 }

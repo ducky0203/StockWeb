@@ -30,7 +30,6 @@ const RADIAN = Math.PI / 180
  */
 function makeRenderPct(valueKey: 'soLuong' | 'giaTri', total: number) {
   // recharts' PieLabelRenderProps are all loosely typed/optional, so coerce here.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function renderPct(props: any) {
     const value: number = Number(props?.payload?.[valueKey] ?? props.value ?? 0)
     const percent = total > 0 ? value / total : 0

@@ -1,40 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface AsyncState {
-  data: Record<string, unknown>[] | null
-  loading: boolean
-  error: string | null
-}
-
-interface PhuLieuState {
-  stock: AsyncState
-  trucQuan: AsyncState
-  stockTime: AsyncState
-}
-
-function asyncState(): AsyncState {
-  return { data: null, loading: false, error: null }
-}
-
-const initialState: PhuLieuState = {
-  stock: asyncState(),
-  trucQuan: asyncState(),
-  stockTime: asyncState(),
+const initialState = {
+  loading: false,
+  khoSelected: { id_Kho: -1, ten_Kho: '-- Chọn kho --', maChiNhanh: '00' } as any,
+  listStock: [],
+  listTrucQuan: [],
 }
 
 const phuLieuSlice = createSlice({
   name: 'phuLieuSlice',
   initialState,
   reducers: {
-    phuLieuUpdateData: (state, action: PayloadAction<Partial<PhuLieuState>>) => {
+    phuLieuUpdateData: (state, action: PayloadAction<any>) => {
       Object.assign(state, action.payload)
     },
-    fetchPLStock: (_state, _action: PayloadAction<number | undefined>) => {},
-    fetchPLTrucQuan: (_state, _action: PayloadAction<{ idKho: number | undefined; search: string }>) => {},
-    fetchPLStockTime: (_state, _action: PayloadAction<number | undefined>) => {},
+    fetchPLStock: (_state, _action) => {},
+    fetchPLTrucQuan: (_state, _action) => {},
   },
 })
 
-export const { phuLieuUpdateData, fetchPLStock, fetchPLTrucQuan, fetchPLStockTime } = phuLieuSlice.actions
+export const { phuLieuUpdateData, fetchPLStock, fetchPLTrucQuan } = phuLieuSlice.actions
 export default phuLieuSlice.reducer

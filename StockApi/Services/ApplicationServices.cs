@@ -13,6 +13,7 @@ public static class ApplicationServices
         services.AddScoped<IKhoNguyenLieuService, KhoNguyenLieuService>();
         services.AddScoped<IKhoPhuLieuService, KhoPhuLieuService>();
         services.AddScoped<IKhoThanhPhamService, KhoThanhPhamService>();
+        services.AddScoped<IPackingListService, PackingListService>();
         return services;
     }
 }

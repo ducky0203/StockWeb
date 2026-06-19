@@ -4,7 +4,7 @@ namespace StockApi.DTOs;
 /// <summary>Tồn kho thành phẩm. SP: pr_Web_Report_NhapXuatKho_ThanhPham_Stock.</summary>
 public sealed class StockThanhPhamDto
 {
-    public int Stt { get; set; }
+    public long? Stt { get; set; }
     public string? MaChiNhanh { get; set; }
     public DateTime? Ngay { get; set; }
     public string? MaHang { get; set; }

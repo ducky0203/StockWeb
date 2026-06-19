@@ -11,8 +11,8 @@ public class KhoNguyenLieuController(
     IKhoNguyenLieuService service,
     ILogger<KhoNguyenLieuController> logger) : ControllerBase
 {
-    [HttpGet("stock/{id_Kho:int}")]
-    public async Task<IActionResult> GetStock(short id_Kho, CancellationToken ct)
+    [HttpGet("stock")]
+    public async Task<IActionResult> GetStock([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {
@@ -26,8 +26,8 @@ public class KhoNguyenLieuController(
         }
     }
 
-    [HttpGet("truc-quan/{id_Kho:int}")]
-    public async Task<IActionResult> GetTrucQuan(short id_Kho, CancellationToken ct)
+    [HttpGet("truc-quan")]
+    public async Task<IActionResult> GetTrucQuan([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {
@@ -41,8 +41,8 @@ public class KhoNguyenLieuController(
         }
     }
 
-    [HttpGet("stock-time/{id_Kho:int}")]
-    public async Task<IActionResult> GetStockTime(short id_Kho, CancellationToken ct)
+    [HttpGet("stock-time")]
+    public async Task<IActionResult> GetStockTime([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {
@@ -56,8 +56,8 @@ public class KhoNguyenLieuController(
         }
     }
 
-    [HttpGet("du-bao/{id_Kho:int}")]
-    public async Task<IActionResult> GetDuBao(short id_Kho, CancellationToken ct)
+    [HttpGet("du-bao")]
+    public async Task<IActionResult> GetDuBao([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {

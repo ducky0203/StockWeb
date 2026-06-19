@@ -57,8 +57,8 @@ public sealed class NguyenLieuStockTimeDto
     public string? Mau { get; set; }
     public decimal? SoLuong { get; set; }
     public decimal? GiaTri { get; set; }
-    public decimal? SoLuong_SanPham { get; set; }
-    public decimal? KhoiLuong { get; set; }
+    public int? SoLuong_SanPham { get; set; }
+    public int? KhoiLuong { get; set; }
 }
 
 /// <summary>Dự báo kho nguyên liệu. SP: pr_CBK_DuBaoKhoNL_Select_wKho.</summary>
@@ -66,7 +66,7 @@ public sealed class DuBaoKhoNguyenLieuDto
 {
     public int Id_DuBaoKho { get; set; }
     public string? Tuan { get; set; }
-    public double? ToKeDung { get; set; }
+    public double? SoKeDung { get; set; }
     public double? SoKeGiaiPhong { get; set; }
     public double? SoKeThem { get; set; }
     public string? SucChua { get; set; }

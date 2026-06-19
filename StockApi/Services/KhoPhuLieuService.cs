@@ -27,8 +27,9 @@ public class KhoPhuLieuService(ApplicationDbContext db, ICacheService cache) : I
         cache.GetOrCreateAsync($"pl:truc-quan:{id_Kho}", CacheDuration.Small, _ =>
         {
             var param = new SqlParameter("@iID_Kho", id_Kho);
+            var searchParam = new SqlParameter("@sSearch", "");
             return db.TrucQuanPhuLieuRepo
-                .FromSqlRaw("EXEC dbo.pr_App_KhoPL_TrucQuan_Select_wID_Kho @iID_Kho", param)
+                .FromSqlRaw("EXEC dbo.pr_App_KhoPL_TrucQuan_Select_wID_Kho @iID_Kho, @sSearch", param, searchParam)
                 .ToListAsync(ct);
         }, ct);
 }

@@ -11,8 +11,8 @@ public class KhoThanhPhamController(
     IKhoThanhPhamService service,
     ILogger<KhoThanhPhamController> logger) : ControllerBase
 {
-    [HttpGet("stock/{maChiNhanh}")]
-    public async Task<IActionResult> GetStock(string maChiNhanh, CancellationToken ct)
+    [HttpGet("stock")]
+    public async Task<IActionResult> GetStock([FromQuery] string maChiNhanh, CancellationToken ct)
     {
         try
         {
@@ -26,8 +26,8 @@ public class KhoThanhPhamController(
         }
     }
 
-    [HttpGet("truc-quan/{maChiNhanh}")]
-    public async Task<IActionResult> GetTrucQuan(string maChiNhanh, CancellationToken ct)
+    [HttpGet("truc-quan")]
+    public async Task<IActionResult> GetTrucQuan([FromQuery] string maChiNhanh, CancellationToken ct)
     {
         try
         {
@@ -41,8 +41,8 @@ public class KhoThanhPhamController(
         }
     }
 
-    [HttpGet("stock-time/{maChiNhanh}")]
-    public async Task<IActionResult> GetStockTime(string maChiNhanh, CancellationToken ct)
+    [HttpGet("stock-time")]
+    public async Task<IActionResult> GetStockTime([FromQuery] string maChiNhanh, CancellationToken ct)
     {
         try
         {
@@ -56,8 +56,8 @@ public class KhoThanhPhamController(
         }
     }
 
-    [HttpGet("du-bao/{maChiNhanh}")]
-    public async Task<IActionResult> GetDuBao(string maChiNhanh, CancellationToken ct)
+    [HttpGet("du-bao")]
+    public async Task<IActionResult> GetDuBao([FromQuery] string maChiNhanh, CancellationToken ct)
     {
         try
         {

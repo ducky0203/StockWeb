@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using StockApi.Commnons;
@@ -47,8 +48,9 @@ public class KhoNguyenLieuService(ApplicationDbContext db, ICacheService cache) 
         cache.GetOrCreateAsync($"nl:du-bao:{id_Kho}", CacheDuration.Small, _ =>
         {
             var param = new SqlParameter("@iID_Kho", id_Kho);
+            var errorCode = new SqlParameter("@iErrorCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
             return db.DuBaoKhoNguyenLieuRepo
-                .FromSqlRaw("EXEC dbo.pr_CBK_DuBaoKhoNL_Select_wKho @iID_Kho", param)
+                .FromSqlRaw("EXEC dbo.pr_CBK_DuBaoKhoNL_Select_wKho @iID_Kho, @iErrorCode OUTPUT", param, errorCode)
                 .ToListAsync(ct);
         }, ct);
 }

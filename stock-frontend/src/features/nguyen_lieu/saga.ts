@@ -1,5 +1,4 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import api from '@/config/api'
 import {
   nguyenLieuUpdateData,
@@ -9,47 +8,63 @@ import {
   fetchNLDuBao,
 } from './reducer'
 
-function* _fetchNLStock(action: PayloadAction<number | undefined>): Generator<unknown> {
+function* _fetchNLStock({payload}: any): Generator<any> {
   try {
-    yield put(nguyenLieuUpdateData({loading: true}))
-    const res = yield api.get(`nguyen-lieu/stock/${action.payload}`)
-    const {data} = res.data;
-    yield put(nguyenLieuUpdateData({...data, loading: false}))
+    yield put(nguyenLieuUpdateData({ loading: true }))
+    const res = yield api.get("nguyen-lieu/stock", {params: payload})
+    const { data } = res.data
+    console.log('[NguyenLieu API] listStock sample:', data?.listStock?.[0])
+    yield put(nguyenLieuUpdateData({ ...data, loading: false }))
   } catch (e: any) {
-    alert("Lỗi: " + e.message);
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[NguyenLieu API] stock error:', msg)
+  } finally {
+    yield put(nguyenLieuUpdateData({ loading: false }))
   }
 }
 
-function* _fetchNLTrucQuan(action: PayloadAction<{ idKho: number | undefined; search: string }>): Generator<unknown> {
+function* _fetchNLTrucQuan({payload}: any): Generator<any> {
   try {
-    yield put(nguyenLieuUpdateData({loading: true}))
-    const res = yield api.get(`nguyen-lieu/truc-quan/${action.payload.idKho}`)
-    const {data} = res.data;
-    yield put(nguyenLieuUpdateData({...data, loading: false}))
+    yield put(nguyenLieuUpdateData({ loading: true }))
+    const res = yield api.get("nguyen-lieu/truc-quan", {params: payload})
+    const { data } = res.data
+    console.log('[NguyenLieu API] listTrucQuan sample:', data?.listTrucQuan?.[0])
+    yield put(nguyenLieuUpdateData({ ...data, loading: false }))
   } catch (e: any) {
-    alert("Lỗi: " + e.message);
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[NguyenLieu API] truc-quan error:', msg)
+  } finally {
+    yield put(nguyenLieuUpdateData({ loading: false }))
   }
 }
 
-function* _fetchNLStockTime(action: PayloadAction<number | undefined>): Generator<unknown> {
+function* _fetchNLStockTime({payload}: any): Generator<any> {
   try {
-    yield put(nguyenLieuUpdateData({loading: true}))
-    const res = yield api.get(`nguyen-lieu/stock-time/${action.payload}`)
-    const {data} = res.data;
-    yield put(nguyenLieuUpdateData({...data, loading: false}))
+    yield put(nguyenLieuUpdateData({ loading: true }))
+    const res = yield api.get("nguyen-lieu/stock-time", {params: payload})
+    const { data } = res.data
+    console.log('[NguyenLieu API] listStockTime:', data?.listStockTime)
+    yield put(nguyenLieuUpdateData({ ...data, loading: false }))
   } catch (e: any) {
-    alert("Lỗi: " + e.message);
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[NguyenLieu API] stock-time error:', msg)
+  } finally {
+    yield put(nguyenLieuUpdateData({ loading: false }))
   }
 }
 
-function* _fetchNLDuBao(action: PayloadAction<number | undefined>): Generator<unknown> {
+function* _fetchNLDuBao({payload}: any): Generator<any> {
   try {
-    yield put(nguyenLieuUpdateData({loading: true}))
-    const res = yield api.get(`nguyen-lieu/du-bao/${action.payload}`)
-    const {data} = res.data;
-    yield put(nguyenLieuUpdateData({...data, loading: false}))
+    yield put(nguyenLieuUpdateData({ loading: true }))
+    const res = yield api.get("nguyen-lieu/du-bao", {params: payload})
+    const { data } = res.data
+    console.log('[NguyenLieu API] listDuBao:', data?.listDuBao)
+    yield put(nguyenLieuUpdateData({ ...data, loading: false }))
   } catch (e: any) {
-    alert("Lỗi: " + e.message);
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[NguyenLieu API] du-bao error:', msg)
+  } finally {
+    yield put(nguyenLieuUpdateData({ loading: false }))
   }
 }
 

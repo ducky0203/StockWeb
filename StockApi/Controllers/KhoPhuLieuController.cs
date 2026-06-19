@@ -11,8 +11,8 @@ public class KhoPhuLieuController(
     IKhoPhuLieuService service,
     ILogger<KhoPhuLieuController> logger) : ControllerBase
 {
-    [HttpGet("stock/{id_Kho:int}")]
-    public async Task<IActionResult> GetStock(short id_Kho, CancellationToken ct)
+    [HttpGet("stock")]
+    public async Task<IActionResult> GetStock([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {
@@ -26,8 +26,8 @@ public class KhoPhuLieuController(
         }
     }
 
-    [HttpGet("truc-quan/{id_Kho:int}")]
-    public async Task<IActionResult> GetTrucQuan(short id_Kho, CancellationToken ct)
+    [HttpGet("truc-quan")]
+    public async Task<IActionResult> GetTrucQuan([FromQuery] short id_Kho, CancellationToken ct)
     {
         try
         {

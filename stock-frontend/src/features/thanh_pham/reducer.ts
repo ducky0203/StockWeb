@@ -1,41 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface AsyncState {
-  data: Record<string, unknown>[] | null
-  loading: boolean
-  error: string | null
-}
-
-interface ThanhPhamState {
-  stock: AsyncState
-  trucQuan: AsyncState
-  stockTime: AsyncState
-  duBao: AsyncState
-}
-
-function asyncState(): AsyncState {
-  return { data: null, loading: false, error: null }
-}
-
-const initialState: ThanhPhamState = {
-  stock: asyncState(),
-  trucQuan: asyncState(),
-  stockTime: asyncState(),
-  duBao: asyncState(),
+const initialState = {
+  loading: false,
+  chiNhanhSelected: { maChiNhanh: '-1', tenChiNhanh: '-- Chọn chi nhánh --' } as any,
+  listStock: [],
+  listTrucQuan: [],
+  listStockTime: [],
+  listDuBao: [],
 }
 
 const thanhPhamSlice = createSlice({
   name: 'thanhPhamSlice',
   initialState,
   reducers: {
-    thanhPhamUpdateData: (state, action: PayloadAction<Partial<ThanhPhamState>>) => {
+    thanhPhamUpdateData: (state, action: PayloadAction<any>) => {
       Object.assign(state, action.payload)
     },
-    fetchTPStock: (_state, _action: PayloadAction<string | undefined>) => {},
-    fetchTPTrucQuan: (_state, _action: PayloadAction<{ maChiNhanh: string | undefined; search: string }>) => {},
-    fetchTPStockTime: (_state, _action: PayloadAction<string | undefined>) => {},
-    fetchTPDuBao: (_state, _action: PayloadAction<string | undefined>) => {},
+    fetchTPStock: (_state, _action) => {},
+    fetchTPTrucQuan: (_state, _action) => {},
+    fetchTPStockTime: (_state, _action) => {},
+    fetchTPDuBao: (_state, _action) => {},
   },
 })
 

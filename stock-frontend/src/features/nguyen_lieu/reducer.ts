@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {
   loading: false,
+  khoSelected: { id_Kho: -1, ten_Kho: '-- Chọn kho --', maChiNhanh: '00' } as any,
   listStock: [],
   listTrucQuan: [],
   listStockTime: [],

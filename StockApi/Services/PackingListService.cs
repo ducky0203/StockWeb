@@ -12,7 +12,7 @@ public interface IPackingListService
     Task<List<PackingListDto>> GetMainAsync(DateOnly tuNgay, DateOnly denNgay, CancellationToken ct);
 }
 
-public class PackingListService(ApplicationDbContext db, ICacheService cache)
+public class PackingListService(ApplicationDbContext db, ICacheService cache) : IPackingListService
 {
     // pr_Web_PackingList_Select_Main(@daTuNgay date, @daDenNgay date)
     public Task<List<PackingListDto>> GetMainAsync(DateOnly tuNgay, DateOnly denNgay, CancellationToken ct) =>

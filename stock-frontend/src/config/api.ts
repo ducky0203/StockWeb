@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosResponse } from 'axios'
 import env from '@/config/env.ts'
 
 const api: AxiosInstance = axios.create({
@@ -10,7 +10,12 @@ const api: AxiosInstance = axios.create({
   },
 })
 
-api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+api.interceptors.request.use((config) => {
+  console.log(
+    config.method,
+    `${config.baseURL}${config.url}`,
+    config?.params ?? config?.data,
+  );
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`

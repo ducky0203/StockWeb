@@ -119,13 +119,11 @@ function PieTooltip({
 function Donut({
   data,
   valueKey,
-  total,
-  caption,
+  total
 }: {
   data: ChartRow[]
   valueKey: 'soLuong' | 'giaTri'
   total: number
-  caption: string
 }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -146,7 +144,7 @@ function Donut({
           {data.map((entry) => (
             <Cell key={entry.id_StockTime ?? entry.label} fill={entry.color} stroke="#fff" strokeWidth={1} />
           ))}
-          <Label position="center" content={<CenterLabel total={total} caption={caption} />} />
+          <Label position="center" content={<CenterLabel total={total} caption={''} />} />
         </Pie>
         <Tooltip content={<PieTooltip valueKey={valueKey} total={total} />} />
         <Legend iconSize={9} iconType="circle" wrapperStyle={{ fontSize: 11 }} />
@@ -197,14 +195,14 @@ export default function StockTimeChart({ kho }: StockTimeChartProps) {
         <section className="flex min-h-0 flex-col rounded-lg border border-gray-200 bg-white p-3">
           <h3 className="mb-1 text-sm font-semibold text-gray-800">Phân bổ số lượng</h3>
           <div className="min-h-0 flex-1">
-            <Donut data={data} valueKey="soLuong" total={totals.soLuong} caption="Tổng SL" />
+            <Donut data={data} valueKey="soLuong" total={totals.soLuong} />
           </div>
         </section>
 
         <section className="flex min-h-0 flex-col rounded-lg border border-gray-200 bg-white p-3">
           <h3 className="mb-1 text-sm font-semibold text-gray-800">Phân bổ giá trị</h3>
           <div className="min-h-0 flex-1">
-            <Donut data={data} valueKey="giaTri" total={totals.giaTri} caption="Tổng GT" />
+            <Donut data={data} valueKey="giaTri" total={totals.giaTri} />
           </div>
         </section>
       </div>

@@ -4,6 +4,8 @@ import { Download, RefreshCw } from 'lucide-react'
 import PLStockTable from '@/features/phu_lieu/components/PLStockTable'
 import PLTrucQuanGrid from '@/features/phu_lieu/components/PLTrucQuanGrid'
 import { plStockColumns } from '@/features/phu_lieu/columns'
+import { stockTimeBands, filterStockByTime } from '@/utils/stockTimeBand'
+import type { StockTimeBand } from '@/utils/stockTimeBand'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { phuLieuUpdateData } from '@/features/phu_lieu/reducer'
 import { exportTableToExcel } from '@/utils/exportExcel'
@@ -28,15 +30,22 @@ export default function PhuLieuPage(): JSX.Element {
     )
   }, [listKho])
 
+  // Bộ lọc thời gian lưu kho
+  const [timeBand, setTimeBand] = useState<StockTimeBand>('all')
+
   const [reloadKey, setReloadKey] = useState(0)
 
   const stockRows = listStock as Record<string, unknown>[]
+  const filteredStockRows = useMemo(
+    () => filterStockByTime(stockRows, timeBand, 'ngay'),
+    [stockRows, timeBand],
+  )
 
   const handleExport = () => {
-    if (!stockRows.length) return
+    if (!filteredStockRows.length) return
     void exportTableToExcel({
       columns: plStockColumns,
-      data: stockRows,
+      data: filteredStockRows,
       fileName: `ton-kho-pl-${khoSelected.id_Kho ?? 'all'}.xlsx`,
     })
   }
@@ -66,6 +75,24 @@ export default function PhuLieuPage(): JSX.Element {
               </option>
             ))}
           </select>
+          {tab === 'stock' && (
+            <div className="inline-flex rounded-lg border border-gray-200 bg-white p-0.5">
+              {stockTimeBands.map((b) => (
+                <button
+                  key={b.key}
+                  type="button"
+                  className={`rounded-md px-3 py-1 text-sm font-medium transition-colors ${
+                    timeBand === b.key
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                  onClick={() => setTimeBand(b.key)}
+                >
+                  {b.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -103,15 +130,15 @@ export default function PhuLieuPage(): JSX.Element {
             onClick={() => setTab(item.key)}
           >
             {item.label}
-            {item.key === 'stock' && stockRows.length > 0 && (
-              <span className="ml-1.5 text-xs text-gray-400">({stockRows.length})</span>
+            {item.key === 'stock' && filteredStockRows.length > 0 && (
+              <span className="ml-1.5 text-xs text-gray-400">({filteredStockRows.length})</span>
             )}
           </button>
         ))}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col p-4">
-        {tab === 'stock' && <PLStockTable key={reloadKey} kho={khoSelected} />}
+        {tab === 'stock' && <PLStockTable key={reloadKey} kho={khoSelected} band={timeBand} />}
         {tab === 'trucQuan' && <PLTrucQuanGrid key={reloadKey} kho={khoSelected} />}
       </div>
     </div>

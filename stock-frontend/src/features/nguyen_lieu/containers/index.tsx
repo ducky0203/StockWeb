@@ -3,6 +3,7 @@ import type { JSX } from 'react'
 import { Download, RefreshCw } from 'lucide-react'
 import NLStockTable from '@/features/nguyen_lieu/components/NLStockTable'
 import TrucQuanDayGrid from '@/features/nguyen_lieu/components/TrucQuanDayGrid'
+import SoDoKho from '@/features/nguyen_lieu/components/SoDoKho'
 import StockTimeChart from '@/features/nguyen_lieu/components/StockTimeChart'
 import DuBaoChart from '@/features/nguyen_lieu/components/DuBaoChart'
 import { nlStockColumns, stockTimeBands, filterStockByTime } from '@/features/nguyen_lieu/columns'
@@ -11,11 +12,12 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { nguyenLieuUpdateData } from '@/features/nguyen_lieu/reducer'
 import { exportTableToExcel } from '@/utils/exportExcel'
 
-type TabKey = 'stock' | 'trucQuan' | 'stockTime'
+type TabKey = 'stock' | 'trucQuan' | 'soDo' | 'stockTime'
 
 const tabs: { key: TabKey; label: string }[] = [
   { key: 'stock', label: 'Tồn kho' },
   { key: 'trucQuan', label: 'Trực quan' },
+  { key: 'soDo', label: 'Sơ đồ kho' },
   { key: 'stockTime', label: 'Stock Time' },
 ]
 
@@ -140,6 +142,7 @@ export default function NguyenLieuPage(): JSX.Element {
       <div className="flex min-h-0 flex-1 flex-col p-4">
         {tab === 'stock' && <NLStockTable key={reloadKey} kho={khoSelected} band={timeBand} />}
         {tab === 'trucQuan' && <TrucQuanDayGrid key={reloadKey} kho={khoSelected} />}
+        {tab === 'soDo' && <SoDoKho key={reloadKey} kho={khoSelected} />}
         {tab === 'stockTime' && (
           <div className="flex min-h-0 flex-1 gap-4">
             <div className="flex min-h-0 flex-1 flex-col">

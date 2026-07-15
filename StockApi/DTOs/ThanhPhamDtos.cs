@@ -8,6 +8,7 @@ public sealed class StockThanhPhamDto
     public string? MaChiNhanh { get; set; }
     public DateTime? Ngay { get; set; }
     public string? MaHang { get; set; }
+    public string? BuyDate { get; set; }
     public string? Po_No { get; set; }
     public string? DichDen { get; set; }
     public int? ThoiGian_LuuKho { get; set; }
